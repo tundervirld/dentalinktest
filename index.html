@@ -18,26 +18,59 @@
                 
                     <ul>
                         <li class="heading-list">Programación</li>
-                        <li><a href="#pregunta11">Pregunta 1</a></li>
-                        <li><a href="#pregunta12">Pregunta 2</a></li>
-                        <li><a href="#pregunta13">Pregunta 3</a></li>
+                        <li class="show-answers selected" attr-show-answer="#pregunta11">
+                            <a href="javascript:void(0)">Pregunta 1</a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta12">
+                            <a href="javascript:void(0)">Pregunta 2</a>
+                            </li>
+                        <li class="show-answers" attr-show-answer="#pregunta13">
+                            <a href="javascript:void(0)">Pregunta 3</a>
+                        </li>
                         <li class="heading-list">Modelo de datos</li>
-                        <li><a href="#">Ejercicio 1</a></li>
-                        <li><a href="#">Ejercicio 2</a></li>
-                        <li><a href="#">Ejercicio 3</a></li>
-                        <li><a href="#">Ejercicio 4</a></li>
-                        <li><a href="#">Ejercicio 5</a></li>
-                        <li><a href="#">Ejercicio 6</a></li>
+                        <li class="show-answers" attr-show-answer="#pregunta21">
+                            <a href="javascript:void(0)">Ejercicio 1
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta22">
+                            <a href="javascript:void(0)">Ejercicio 2
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta23">
+                            <a href="javascript:void(0)">Ejercicio 3
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta24">
+                            <a href="javascript:void(0)">Ejercicio 4
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta25">
+                            <a href="javascript:void(0)">Ejercicio 5
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta26">
+                            <a href="javascript:void(0)">Ejercicio 6
+                            </a>
+                        </li>
                         <li class="heading-list">Diseño</li>
-                        <li><a href="#">Ejercicio 1</a></li>
-                        <li><a href="#">Ejercicio 2</a></li>
-                        <li><a href="#">Ejercicio 3</a></li>
+                        <li class="show-answers" attr-show-answer="#pregunta31">
+                            <a href="javascript:void(0)">Ejercicio 1
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta32">
+                            <a href="javascript:void(0)">Ejercicio 2
+                            </a>
+                        </li>
+                        <li class="show-answers" attr-show-answer="#pregunta33">
+                            <a href="javascript:void(0)">Ejercicio 3
+                            </a>
+                        </li>
                     </ul>
                 
             </div>
             <!--end menu-->
             <div class="box content">
-               <div id="pregunta11" class="question" style="display:none" >
+               <div id="pregunta11" class="question" style="display:block" >
                    <h4>Enunciado</h4>
                    <p>Escriba una función/método que determine la cantidad de 0’s a la derecha de n! (factorial)</p>
                   
@@ -292,9 +325,14 @@ function evaluationTypeNumber(size, value){
 
                </div><!--end pregunta12 -->
 
-               <div id="pregunta13" style="display: none;">
-                   Pregunta 3
-                   
+               <div id="pregunta13" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Considere un tablero de ajedrez de NxN, realice un algoritmo que visite cada espacio del tablero, usando solamente los movimientos de un caballo. (Puntos extras si se visita cada espacio una sola vez) Model.</p>
+                    
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <label>lala</label>
+                    </div>
                </div>
 
                 <div id="pregunta21" class="question" style="display: none;">
@@ -847,279 +885,83 @@ Clase:"Jugador"
                   
                 </div> <!-- end pregunta32 -->    
 
-             <div id="pregunta33" class="question">
+             <div id="pregunta33" class="question" style="display: none;">
                    <h4>Enunciado</h4>
                    <h5>Diseño código frontend</h5>
                    <p>Construya una función o clase en JS que recibiendo el anterior JSON por parámetro, permita renderear una agenda semanal en html y con bloques de 30 minutos.:</p>
                     <div class="solution">
                         <h3>Solución</h3>
-                      
+                      <p>Para este ejecicio utilizo, <b>handlebars.js</b>, <b>backbone.js</b>, <b>jquery.js</b>, un poco de <b>underscore.js</b>, y cambie un poco el set de datos para poder identificar las horas disponibles y las citas que tienen que pintarse de color amarillo agregando los campos "advertencia", "disponible".
+                      </p>
+
+
+                      <p> Para la presentacion de la tabla de manera dinámica hago varias acciones, se pueden observar en el archivo agenda.js, primero determino la hora minima y la hora maxima para poder tener un set de horas posibles entre esos rangos, luego relleno un set de datos con las citas y todas las horas para que quede cuadrado y facilitar la presentacion.
+                       
+                      </p>
+                      </br>
+                       <a href="javascript:void(0)" class="button-link" attr-tipo-set="citas1"> Ejemplo 1</a>
+                    
+                       <a href="javascript:void(0)" class="button-link" attr-tipo-set="citas2"> Ejemplo 2</a>
                     </div>
 
                      <div class="content-code">
                         <div class="container-calendar">
-                            <div class="container-table">
+                            <div id="citas" class="container-table">
 
-                                <div class="container-cell first-column">
-                                    <div class="container-row row-header">
-                                        &nbsp;
-                                    </div>
-                                    <div class="container-row">
-                                        08:00
-                                    </div>
-                                    <div class="container-row">
-                                        08:30
-                                    </div>
-                                    <div class="container-row">
-                                        09:00
-                                    </div>
-                                    <div class="container-row">
-                                        09:30
-                                    </div>
-                                    <div class="container-row">
-                                        10:00
-                                    </div>
-                                    <div class="container-row">
-                                        10:30
-                                    </div>
-                                    <div class="container-row">
-                                        11:00
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Lunes
-                                    </div>
-                                    <div class="container-row available">
-                                        <div class="text-row">
-                                            <span>&nbsp;</span>
-                                        </div>
-                                    </div>
-                                    <div class="container-row available">
-                                        <div class="text-row">
-                                            <span>&nbsp;</span>
-                                        </div>
-                                    </div>
-                                    <div class="container-row available">
-                                        <div class="text-row">
-                                            <span>&nbsp;</span>
-                                        </div>
-                                    </div>
-                                    <div class="container-row available">
-                                        <div class="text-row">
-                                            <span>&nbsp;</span>
-                                        </div>
-                                    </div>
-                                    <div class="container-row appointment">
-                                        <div class="test-row-appointment">
-                                            <span>Roger Reyes</span>
-                                        </div>                                      
-                                    </div>
-                                     <div class="container-row">
-                                      col 2  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 2  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Martes
-                                    </div>
-                                   <div class="container-row available">
-                                        <div class="text-row">
-                                            <span>&nbsp;</span>
-                                        </div>
-                                    </div>
-                                    <div class="container-row appointment delayed">
-                                        <div class="test-row-appointment">
-                                            <span>Peter More</span>
-                                        </div>                                      
-                                    </div>
-                                    <div class="container-row">
-                                      col 3  fila 4
-                                    </div>
-                                    <div class="container-row">
-                                      col 3  fila 5
-                                    </div>
-                                    <div class="container-row">
-                                      col 3  fila 6
-                                    </div>
-                                    <div class="container-row">
-                                      col 3  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 3  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Miercoles
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 2
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 3
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 4
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 5
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 6
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 4  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Jueves
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 2
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 3
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 4
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 5
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 6
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 5  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Viernes
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 2
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 3
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 4
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 5
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 6
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 6  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Sabado
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 2
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 3
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 4
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 5
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 6
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 7  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell">
-                                    <div class="container-row row-header">
-                                      Domingo
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 2
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 3
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 4
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 5
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 6
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 7
-                                    </div>
-                                    <div class="container-row">
-                                      col 8  fila 8
-                                    </div>
-                                </div>
-
-                                <div class="container-cell last-column">
-                                    <div class="container-row row-header">
-                                      &nbsp;
-                                    </div>
-                                    <div class="container-row">
-                                      08:00
-                                    </div>
-                                    <div class="container-row">
-                                      08:30
-                                    </div>
-                                    <div class="container-row">
-                                      09:00
-                                    </div>
-                                    <div class="container-row">
-                                      09:30
-                                    </div>
-                                    <div class="container-row">
-                                      10:00
-                                    </div>
-                                    <div class="container-row">
-                                      10:30
-                                    </div>
-                                    <div class="container-row">
-                                      11:00
-                                    </div>
-                                </div>
+                                <!-- Here content handlebars -->
 
                             </div> <!-- container-tabla-->
                         </div> <!-- container-calendar -->  
                     </div><!-- content-code -->
+
+                    <div class="content-code"> 
+                        <h5>Set de datos</h5>
+                        <div class="container-citas1" style="display: block;">  
+                            <pre class="js">
+var citas1: {
+    lunes: [
+        {nombre: 'Roger ', hora_inicio: '06:30', hora_termino: '08:00'},
+        {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00', advertencia:true },
+        {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00'},
+        {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
+        {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
+    ], 
+    martes: [],
+    miercoles: [
+        {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
+        {nombre: 'Daniel', hora_inicio: '10:30', hora_termino: '12:00', advertencia:true },
+        {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
+        {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
+    ], 
+    jueves: [], 
+    viernes: [
+        {nombre: ''      , hora_inicio: '10:30', hora_termino: '11:00', disponible: true },
+        {nombre: ''      , hora_inicio: '16:00', hora_termino: '18:00', disponible: true }
+    ]
+}                        
+                        </pre> 
+                      </div>
+                      <div class="container-citas2" style="display: none;">  
+                        <pre class="js" >
+var citas2: {
+    lunes: [                    
+        {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00', advertencia:true },
+        {nombre: ''      , hora_inicio: '08:30', hora_termino: '09:30', disponible: true }
+    ], 
+    martes: [
+        {nombre: ''      , hora_inicio: '09:30', hora_termino: '11:00', disponible: true }
+    ],
+    miercoles: [
+        {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'}
+    ], 
+    jueves: [], 
+    viernes: []
+}                       </pre>
+                    </div>
+                      
+                    </div><!-- content-code -->
+
+
                 </div> <!-- end pregunta33 -->           
                 
 
@@ -1132,19 +974,34 @@ Clase:"Jugador"
             Copyright © <a href="http://cl.linkedin.com/pub/roger-reyes/35/849/65a/">Roger R. Reyes Miranda</a>
           </div>
         </div>
+
+        <!--Templates Handlebars -->
+        <script id="citaTemplate" type="text/x-handlebars-template">
+                {{#each this}}
+                    {{{ContainerRowBuilder this}}}
+                {{/each}}
+        </script>
+
+
+        <!-- JS Libraries -->
          <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
          <script type="text/javascript" src="js/jquery.snippet.js"></script> 
+         <script type="text/javascript" src="js/json2.js"></script>
          <script type="text/javascript" src="js/underscore-min.js"></script>         
+         <script type="text/javascript" src="js/backbone-min.js"></script>
+         <script type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
+         <script type="text/javascript" src="js/libraries/helpers/HelpersHandlebars.js"></script>
+
+        <!-- JS Customs -->
          <script type="text/javascript" src="js/functions.js"></script>
+         <script type="text/javascript" src="js/prototype_functions.js"></script>
          <script type="text/javascript" src="js/events.js"></script>
          <script type="text/javascript" src="js/agenda.js"></script>
-         <script type="text/javascript" src="js/backbone-min.js"></script>
+         <script type="text/javascript" src="js/number-to-words-dictionary.js"></script>
          
-         <!-- Files .map-->
-         <script type="text/javascript"  src="js/underscore-min.map"></script>
-
-         <!-- Other Files -->
-         <script type="text/javascript"  src="js/number-to-words-dictionary.js"></script>
+         
+        
+         
 
     </body>
 </html>
