@@ -43,7 +43,7 @@ body {
 }
 
 .sidebar {
-  width: 10%;
+  width: 5%;
   background: #eeeeee;
   border-right: 1px solid #ccc;
 }
@@ -141,7 +141,7 @@ a{
 }
 
 div.content{
-	margin: 20px 0 0 40px;
+	width: 90%;
 }
 div.solution{
 	border: 1px solid #ccc;
