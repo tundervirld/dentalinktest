@@ -100,6 +100,7 @@
                   <div class="content-code">
                         <pre class="js">
 //evaluation-factorial 
+//evaluation-factorial 
 $( ".button-evaluation-factorial" ).click(function(event) {
     var value = $(".input-text-factorial").val();
     if(value && isNumber(value)){
@@ -123,7 +124,21 @@ function factorial(n)
         return 1;
     else
         return n*factorial(n - 1);
-}  
+}
+
+function isInteger(n){
+    var nIsInteger = n.match(/^-?[0-9]+$/);
+    return nIsInteger ? true : false;
+}
+
+function isNumber(n){
+    var nIsNumber = n.match(/^\d{0,2}(?:\.\d{0,2}){0,1}$/);
+    return nIsNumber ? true : false;
+}
+
+function numberToStringArray(n){
+    return String(n).split("");
+}
 
 function numberZerosToRight(n){
     var arrayValues = numberToStringArray(n);
@@ -170,7 +185,7 @@ DictionaryWordsNumbers = {
     "4":{descripcion_simple:"mil"}
 }
 //number-to-words event clic
-$( ".button-number-to-words" ).click(function() {
+$( ".button-number-to-words" ).click(function(event) {
     var value = $(".input-text-number-to-words").val();
     if(value && isInteger(value) ){
             
@@ -183,12 +198,28 @@ $( ".button-number-to-words" ).click(function() {
         $(".input-text-number-to-words").val("");
         alert("Ingrese un número entero menor o igual a 1999");
     }
+  event.preventDefault();
 });
+var words_numbers = DictionaryWordsNumbers;
 function numberToWords(n){
     if (n.length > 0 && parseInt(n.join("")) > 0) {
         var size = n.length;
         var wordNumber = evaluationTypeNumber(size, n)
 
+        //border case numbers 11 to 19
+        if(size == 2){
+            //verify if value exist in dictionary
+            var exist_in_indictionary = words_numbers[size][String(n[0] + n[1])];
+
+            if(exist_in_indictionary!=undefined){
+                wordNumber = words_numbers[size][String(n[0] + n[1])];
+                
+                //end recursivity   
+                n = [];
+            }
+            
+        }
+    
         //delete first member in array and recursion
         var copy_array = n.shift();
         return  wordNumber + " " + (numberToWords(n));
@@ -199,7 +230,6 @@ function numberToWords(n){
 
 function evaluationTypeNumber(size, value){
     var response = "";
-    var words_numbers = DictionaryWordsNumbers;
     var value_to_number = value.join("");
 
     switch(size) {
@@ -251,7 +281,7 @@ function evaluationTypeNumber(size, value){
             }else{
                 response = "";
             }
-            break;
+            break;  
         default:
             break;
     }
@@ -269,7 +299,7 @@ function evaluationTypeNumber(size, value){
                     
                     <div class="solution">
                         <h3>Solución</h3>
-                        <p>El código esta hecho "c" en el archivo salto_caballo.c, lo quería pasar a interfaz, pero al final lo deje en c:
+                        <p>El código esta hecho en "c", en el archivo salto_caballo.c. Lo quería pasar a interfaz, pero al final lo deje en "c".
                         </p>
                         <p>
                             <b>Compilar:&nbsp</b>gcc salto_caballo.c
@@ -289,11 +319,11 @@ function evaluationTypeNumber(size, value){
 
                 <div id="pregunta21" class="question" style="display: none;">
                    <h4>Enunciado</h4>
-                   <p>Un colegio necesita un sistema para administrar sus cursos. El sistema tiene que suportar que se le ingresen varios cursos. Cada curso tendrá un profesor a cargo y una serie de alumnos inscritos. Cada profesor, así como cada alumno puede estar en más de un curso.  Además cada curso tendrá una cantidad no determinada de pruebas, y el sistema debe permitir ingresar la nota para cada alumno en cada prueba. Todas las pruebas valen lo mismo. Escriba a continuación las tablas que utilizaría para resolver este problema con los campos y llaves de éstas. Intente hacer el sistema lo más robusto posible, pero sin incluir datos adicionales a los que se plantean acá.</p>
+                   <p>Un colegio necesita un sistema para administrar sus cursos. El sistema tiene que soportar que se le ingresen varios cursos. Cada curso tendrá un profesor a cargo y una serie de alumnos inscritos. Cada profesor, así como cada alumno puede estar en más de un curso.  Además cada curso tendrá una cantidad no determinada de pruebas, y el sistema debe permitir ingresar la nota para cada alumno en cada prueba. Todas las pruebas valen lo mismo. Escriba a continuación las tablas que utilizaría para resolver este problema con los campos y llaves de éstas. Intente hacer el sistema lo más robusto posible, pero sin incluir datos adicionales a los que se plantean acá.</p>
                   
                     <div class="solution">
                         <h3>Solución</h3>
-                        <label>En la carpeta DB de este proyecto se pueden observar los archivos de la solucion</label>
+                        <label>En la carpeta DB de este proyecto se pueden observar los archivos de la solución.</label>
                   </div>
                    <div class="content-code">
                         <p class="pull-center">
@@ -789,7 +819,7 @@ class Calificacion {
 aplicaciones que utilicen cartas.:</p>
                     <div class="solution">
                         <h3>Solución</h3>
-                        <p>Use algo de Pseudocodigo "poco ortodoxo", se me hizo mas facil representarlos con un estilo de archivo '.yml' solo por tema de orden y tabulaciones, que usan algunos Framework en php para las configuraciones.</p>
+                        <p>Usé algo de Pseudocódigo "poco ortodoxo", se me hizo mas fácil representarlos con un estilo de archivo '.yml' solo por tema de orden y tabulaciones, que usan algunos Framework en php para las configuraciones.</p>
                     </div>
                     <div class="content-code">    
                         <pre class="php">
