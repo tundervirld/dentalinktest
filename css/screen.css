@@ -1,0 +1,233 @@
+/* Basic Style
+Autor: Roger Reyes
+Fecha: 30/12/2014
+*/
+* { margin:0; padding:0;}
+html, body { height: 100%; }
+
+body {
+ 
+  color: black;
+}
+.wrapper {
+  height: 100%;
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+.header {
+  margin: 20px 0;
+  display: table-row;
+  height: 50px;
+  background: #0072c6;
+  color: #fff;
+  line-height: 45px;
+}
+
+.main {
+  height: 100%;
+  display: table;
+  width: 100%;
+}
+
+.box {
+  display: table-cell;
+}
+
+.sidebar {
+  width: 10%;
+  background: #eeeeee;
+  border-right: 1px solid #ccc;
+}
+
+.footer {
+  display: table-row;
+  height:1px;
+  background: #0072c6;
+  color: #fff;
+  height: 40px;
+  line-height: 40px;
+
+}
+/*Style menus*/
+ul {
+
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+li {
+  font: 100 15px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+ 
+li.heading-list{
+	background-color: #fff;
+	font-weight: bold;
+} 
+li:last-child {
+  border: none;
+}
+ 
+li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  width: 200px;
+}
+ 
+li a:hover {
+  
+  background-color: #949292;
+}
+/*End Style menus*/
+
+a{
+	color: white;
+}
+div.content{
+	margin: 20px 0 0 40px;
+}
+div.solution{
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin: 0 20px;
+}
+
+.question{
+	text-align: left;
+}
+.question p, h4, h5{
+	margin: 20px;
+}
+.question p.pull-center{
+	text-align: center;
+}
+.content-code{
+	
+	border: 1px solid #ccc;
+	margin: 20px;
+  padding: 10px 0;
+
+}
+.tables-container-pictures{
+	display: inline-block;;
+
+}
+.tables-container-pictures img{
+	float: left;
+	padding: 10px;
+
+}
+
+table{
+	margin-top: 10px;
+}
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+.container-calendar{
+  width: 960px;
+  margin: 0 auto;
+}
+/*Table for Calendar CSS*/
+.container-table{
+  display: table;
+  border-collapse: separate;
+  width: 100%;
+}
+.container-row{
+  display: table;
+  text-align: center;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  border-left: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+
+}
+.container-cell{
+  width: 12%;
+  display: table-cell;
+  color: #081DF1;
+}
+.container-cell.first-column, .container-cell.last-column {
+  width: 8%;
+  background-color: #EFEFEF;
+  color: #837574;
+}
+.container-cell.last-column{
+  border-right: 1px solid #CACACA;
+}
+.container-cell.last-column .row-header{
+  background: #D2E5EB url("../img/icons/_Last.png") no-repeat center center;
+  color: #D2E5EB;
+}
+.container-cell.first-column .row-header{
+  background: #D2E5EB url("../img/icons/_First.png") no-repeat center center;
+  color: #D2E5EB;
+}
+
+.row-header{
+  background-color: #D2E5EB;
+  color: #0404ED;
+  border:1px solid #CACACA;
+}
+.container-row.available .text-row{
+  background: #D2E5EB url("../img/icons/_Create.png") no-repeat 5px center;
+  background-color: #D2E5EB;
+}
+.container-row.available .text-row span{
+  padding-left: 5px;
+}
+.container-row.appointment{
+  background-image: url("../img/icons/_Comment");
+  background-position: 97% center;
+  background-repeat: no-repeat;  
+}
+.container-row .test-row-appointment{
+  background-image: url("../img/icons/_Calendar");
+  background-position: 2px center;
+  background-repeat: no-repeat;
+}
+.container-row .test-row-appointment span{
+  /*padding-left: 6px;*/
+  font-size: 12px;
+}
+.container-row.appointment.delayed{
+  background-color: #FEFFA6;
+
+}
+
+/*Icons https://www.iconfinder.com/iconsets/6x16-free-application-icons*/
+
+
+
+
+
+
+
+
+
+

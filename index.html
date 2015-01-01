@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+ 
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DentalinkTest</title>
+        <link rel="stylesheet" href="css/screen.css" />
+        <link rel="stylesheet" href="css/jquery.snippet.min.css" />
+        
+    </head>
+    <body>
+    
+        <div class="wrapper">
+          <div class="header"><h1>Test Dentalink</h1></div>
+          <div class="main">
+            <!--menu-->
+            <div class="box sidebar">
+                
+                    <ul>
+                        <li class="heading-list">Programación</li>
+                        <li><a href="#pregunta11">Pregunta 1</a></li>
+                        <li><a href="#pregunta12">Pregunta 2</a></li>
+                        <li><a href="#pregunta13">Pregunta 3</a></li>
+                        <li class="heading-list">Modelo de datos</li>
+                        <li><a href="#">Ejercicio 1</a></li>
+                        <li><a href="#">Ejercicio 2</a></li>
+                        <li><a href="#">Ejercicio 3</a></li>
+                        <li><a href="#">Ejercicio 4</a></li>
+                        <li><a href="#">Ejercicio 5</a></li>
+                        <li><a href="#">Ejercicio 6</a></li>
+                        <li class="heading-list">Diseño</li>
+                        <li><a href="#">Ejercicio 1</a></li>
+                        <li><a href="#">Ejercicio 2</a></li>
+                        <li><a href="#">Ejercicio 3</a></li>
+                    </ul>
+                
+            </div>
+            <!--end menu-->
+            <div class="box content">
+               <div id="pregunta11" class="question" style="display:none" >
+                   <h4>Enunciado</h4>
+                   <p>Escriba una función/método que determine la cantidad de 0’s a la derecha de n! (factorial)</p>
+                  
+                  <div class="solution">
+                    <h3>Solución</h3>
+                    <label>Ingrese un número para calcular el factorial y contar el número de 0 a la derecha.</label>
+                    <input type="text" name="input-text-factorial" class="input-text-factorial"/>
+                    <button type="button" class="button-evaluation-factorial">Evaluar</button>
+                    <table class="gridtable">
+                          <tr>
+                            <th>Factorial</th>
+                            <th>Número de ceros a la derecha</th>
+                          </tr>
+                          <tr>
+                            <td class="value-factorial-number"></td>
+                            <td class="response-cero-numbers"></td>                            
+                          </tr>                          
+                    </table>
+                  </div>
+                  <div class="content-code">
+                        <pre class="js">
+
+                       /*Dictionary of Numbers*/
+DictionaryWordsNumbers = {
+    "1":{"0":"cero","1":"uno","2":"dos","3":"tres","4":"cuatro","5":"cinco","6":"seis","7":"siete","8":"ocho","9":"nueve"},
+    "2":{"10":"dies","11":"once","12":"doce","13":"trece","14":"catorce","15":"quince","16":"dieciseis","17":"diecisiete","18":"dieciocho","19":"diecinueve", "20":"veinte",
+        "30":"treinta","40":"cuarenta","50":"cincuenta","60":"sesenta","70":"setenta","80":"ochenta","90":"noventa"},
+    "3":{descripcion_simple:"ciento", descripcion_compuesta:"cientos", descripcion_especial_cien:"cien", descripcion_especial_quinientos:"quinientos",descripcion_especial_novecientos:"novecientos"},
+    "4":{descripcion_simple:"mil"}
+}
+//number-to-words event clic
+$( ".button-number-to-words" ).click(function() {
+    var value = $(".input-text-number-to-words").val();
+    if(value && isInteger(value) ){
+            
+            $(".value-number-to-words").html(value);
+
+            var textNumber = numberToWords(numberToStringArray(value));
+            $(".text-number-to-words").html(textNumber);               
+           
+    }else{
+        $(".input-text-number-to-words").val("");
+        alert("Ingrese un número entero menor o igual a 1999");
+    }
+});
+function numberToWords(n){
+    if (n.length > 0 && parseInt(n.join("")) > 0) {
+        var size = n.length;
+        var wordNumber = evaluationTypeNumber(size, n)
+
+        //delete first member in array and recursion
+        var copy_array = n.shift();
+        return  wordNumber + " " + (numberToWords(n));
+    }else{
+        return "";
+    }
+}
+
+function evaluationTypeNumber(size, value){
+    var response = "";
+    var words_numbers = DictionaryWordsNumbers;
+    var value_to_number = value.join("");
+
+    switch(size) {
+        case 1:
+            response = words_numbers[size][value_to_number];
+            break;
+        case 2:
+            if(parseInt(value[0]) != 0){
+                var value_residue = value_to_number % 10;
+                var string_and = "";
+                if(value_residue!=0){
+                    value_to_number =  parseInt(value_to_number) - value_residue;
+                    string_and = " y ";
+                }
+                response = words_numbers[size][value_to_number] + string_and;
+            }else{
+                response = "";
+            }
+            break;
+        case 3:
+            var before_word = "";
+            var after_word  = "";
+                
+            if(parseInt(value[0]) == 0){
+                before_word = "";
+                after_word  = "";
+            }else if(parseInt(value[0]) == 1){
+                before_word = words_numbers[size]["descripcion_especial_cien"];
+                
+                if(parseInt(value_to_number) > 100 && parseInt(value_to_number) < 199  ){
+                    before_word = "";
+                    after_word  = words_numbers[size]["descripcion_simple"]; 
+                }   
+            }else if(parseInt(value[0]) == 5){
+                before_word = "";
+                after_word = words_numbers[size]["descripcion_especial_quinientos"];
+            }else if(parseInt(value[0]) == 9){
+                before_word = "";
+                after_word = words_numbers[size]["descripcion_especial_novecientos"];
+            }else{
+                before_word = words_numbers[1][value[0]]
+                after_word  = words_numbers[size]["descripcion_compuesta"];         
+            }
+            response = before_word + " " + after_word;      
+            break;
+        case 4:
+            if(parseInt(value[0]) != 0){
+                response = words_numbers[size]["descripcion_simple"];
+            }else{
+                response = "";
+            }
+            break;
+        default:
+            break;
+    }
+    return response;
+}
+                        </pre>
+                        
+                  </div>
+                   
+               </div><!-- End pregunta11-->
+
+               
+           
+               <div id="pregunta12" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Escriba una función/método que dado un número entero, entregue su representación en palabras, Ej. 145 ­> “ciento cuarenta y cinco”</p>
+                  
+                  <div class="solution">
+                    <h3>Solución</h3>
+                    <label>Ingrese un número entero menor o igual a 1999.</label>
+                    <input type="text" name="input-text-number-to-words" class="input-text-number-to-words">
+                    <button type="button" class="button-number-to-words">Evaluar</button>
+                    <table class="gridtable">
+                          <tr>
+                            <th>Number</th>
+                            <th>Representación en palabras</th>
+                          </tr>
+                          <tr>
+                            <td class="value-number-to-words"></td>
+                            <td class="text-number-to-words"></td>                            
+                          </tr>                          
+                    </table>
+                    
+                  </div>
+                  <div class="content-code">
+                        <pre class="js">
+
+/*Dictionary of Numbers*/
+DictionaryWordsNumbers = {
+    "1":{"0":"cero","1":"uno","2":"dos","3":"tres","4":"cuatro","5":"cinco","6":"seis","7":"siete","8":"ocho","9":"nueve"},
+    "2":{"10":"dies","11":"once","12":"doce","13":"trece","14":"catorce","15":"quince","16":"dieciseis","17":"diecisiete","18":"dieciocho","19":"diecinueve", "20":"veinte",
+        "30":"treinta","40":"cuarenta","50":"cincuenta","60":"sesenta","70":"setenta","80":"ochenta","90":"noventa"},
+    "3":{descripcion_simple:"ciento", descripcion_compuesta:"cientos", descripcion_especial_cien:"cien", descripcion_especial_quinientos:"quinientos",descripcion_especial_novecientos:"novecientos"},
+    "4":{descripcion_simple:"mil"}
+}
+//number-to-words event clic
+$( ".button-number-to-words" ).click(function() {
+    var value = $(".input-text-number-to-words").val();
+    if(value && isInteger(value) ){
+            
+            $(".value-number-to-words").html(value);
+
+            var textNumber = numberToWords(numberToStringArray(value));
+            $(".text-number-to-words").html(textNumber);               
+           
+    }else{
+        $(".input-text-number-to-words").val("");
+        alert("Ingrese un número entero menor o igual a 1999");
+    }
+});
+function numberToWords(n){
+    if (n.length > 0 && parseInt(n.join("")) > 0) {
+        var size = n.length;
+        var wordNumber = evaluationTypeNumber(size, n)
+
+        //delete first member in array and recursion
+        var copy_array = n.shift();
+        return  wordNumber + " " + (numberToWords(n));
+    }else{
+        return "";
+    }
+}
+
+function evaluationTypeNumber(size, value){
+    var response = "";
+    var words_numbers = DictionaryWordsNumbers;
+    var value_to_number = value.join("");
+
+    switch(size) {
+        case 1:
+            response = words_numbers[size][value_to_number];
+            break;
+        case 2:
+            if(parseInt(value[0]) != 0){
+                var value_residue = value_to_number % 10;
+                var string_and = "";
+                if(value_residue!=0){
+                    value_to_number =  parseInt(value_to_number) - value_residue;
+                    string_and = " y ";
+                }
+                response = words_numbers[size][value_to_number] + string_and;
+            }else{
+                response = "";
+            }
+            break;
+        case 3:
+            var before_word = "";
+            var after_word  = "";
+                
+            if(parseInt(value[0]) == 0){
+                before_word = "";
+                after_word  = "";
+            }else if(parseInt(value[0]) == 1){
+                before_word = words_numbers[size]["descripcion_especial_cien"];
+                
+                if(parseInt(value_to_number) > 100 && parseInt(value_to_number) < 199  ){
+                    before_word = "";
+                    after_word  = words_numbers[size]["descripcion_simple"]; 
+                }   
+            }else if(parseInt(value[0]) == 5){
+                before_word = "";
+                after_word = words_numbers[size]["descripcion_especial_quinientos"];
+            }else if(parseInt(value[0]) == 9){
+                before_word = "";
+                after_word = words_numbers[size]["descripcion_especial_novecientos"];
+            }else{
+                before_word = words_numbers[1][value[0]]
+                after_word  = words_numbers[size]["descripcion_compuesta"];         
+            }
+            response = before_word + " " + after_word;      
+            break;
+        case 4:
+            if(parseInt(value[0]) != 0){
+                response = words_numbers[size]["descripcion_simple"];
+            }else{
+                response = "";
+            }
+            break;
+        default:
+            break;
+    }
+    return response;
+}
+
+                        </pre>
+                        
+                   </div>
+
+
+               </div><!--end pregunta12 -->
+
+               <div id="pregunta13" style="display: none;">
+                   Pregunta 3
+                   
+               </div>
+
+                <div id="pregunta21" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Un colegio necesita un sistema para administrar sus cursos. El sistema tiene que suportar que se le ingresen varios cursos. Cada curso tendrá un profesor a cargo y una serie de alumnos inscritos. Cada profesor, así como cada alumno puede estar en más de un curso.  Además cada curso tendrá una cantidad no determinada de pruebas, y el sistema debe permitir ingresar la nota para cada alumno en cada prueba. Todas las pruebas valen lo mismo. Escriba a continuación las tablas que utilizaría para resolver este problema con los campos y llaves de éstas. Intente hacer el sistema lo más robusto posible, pero sin incluir datos adicionales a los que se plantean acá.</p>
+                  
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <label>En la carpeta DB de este proyecto se pueden observar los archivos de la solucion</label>
+                  </div>
+                   <div class="content-code">
+                        <p class="pull-center">
+                            <img src="img/ERR-Diagram.png">
+                        </p>
+                  </div>
+                  <div class="content-code">
+                    <pre class="sql">
+/*data seed*/
+INSERT INTO `colegio_dentalink`.`alumno` (`nombre_alumno`, `apellido_alumno`) VALUES ('Alberto', 'Hurtado');
+INSERT INTO `colegio_dentalink`.`alumno` (`nombre_alumno`, `apellido_alumno`) VALUES ('Pedro ', 'Fernandez');
+INSERT INTO `colegio_dentalink`.`alumno` (`nombre_alumno`, `apellido_alumno`) VALUES ('Miguel', 'Ugarte');
+INSERT INTO `colegio_dentalink`.`alumno` (`nombre_alumno`, `apellido_alumno`) VALUES ('Guillermo', 'Garmendia');
+INSERT INTO `colegio_dentalink`.`alumno` (`nombre_alumno`, `apellido_alumno`) VALUES ('Juan', 'Milano');
+
+
+INSERT INTO `colegio_dentalink`.`profesor` (`nombre_profesor`, `apellido_profesor`) VALUES ('Profesor ', '1');
+INSERT INTO `colegio_dentalink`.`profesor` (`nombre_profesor`, `apellido_profesor`) VALUES ('Profesor', '2');
+INSERT INTO `colegio_dentalink`.`profesor` (`nombre_profesor`, `apellido_profesor`) VALUES ('Profesor', '3');
+INSERT INTO `colegio_dentalink`.`profesor` (`nombre_profesor`, `apellido_profesor`) VALUES ('Profesor', '4');
+
+INSERT INTO `colegio_dentalink`.`curso` (`nombre_curso`, `horas`, `profesor_id`) VALUES ('programación', '10', '1');
+INSERT INTO `colegio_dentalink`.`curso` (`nombre_curso`, `horas`, `profesor_id`) VALUES ('Matematica', '20', '2');
+INSERT INTO `colegio_dentalink`.`curso` (`nombre_curso`, `horas`, `profesor_id`) VALUES ('Ingles', '10', '3');
+INSERT INTO `colegio_dentalink`.`curso` (`nombre_curso`, `horas`, `profesor_id`) VALUES ('Desarrollo IOS', '20', '1');
+
+
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('1', '1');
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('2', '1');
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('3', '1');
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('4', '2');
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('4', '4');
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('5', '3');
+INSERT INTO `colegio_dentalink`.`alumno_curso` (`alumno_id`, `curso_id`) VALUES ('1', '2');
+
+INSERT INTO `colegio_dentalink`.`prueba` (`nombre_prueba`, `curso_id`) VALUES ('Test programacion 1', '1');
+INSERT INTO `colegio_dentalink`.`prueba` (`nombre_prueba`, `curso_id`) VALUES ('Test programacion 2', '1');
+INSERT INTO `colegio_dentalink`.`prueba` (`nombre_prueba`, `curso_id`) VALUES ('Test programacion 3', '1');
+INSERT INTO `colegio_dentalink`.`prueba` (`nombre_prueba`, `curso_id`) VALUES ('Matemáticas Discretas', '2');
+INSERT INTO `colegio_dentalink`.`prueba` (`nombre_prueba`, `curso_id`) VALUES ('Matemáticas Discretas 2', '2');
+
+
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('1', '1', '5');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('1', '2', '7');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('1', '3', '4');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('1', '4', '7');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '1', '6');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '2', '2');
+
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '1', '3');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '2', '2');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '3', '1');
+
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '4', '3');
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '5', '2');
+
+                    </pre>
+                  </div> 
+                  <div class="content-code">
+                        <div class="tables-container-pictures">
+                            <img src="img/alumno.png">
+                            <img src="img/alumno_curso.png">
+                            <img src="img/calificacion.png">
+                            <img src="img/curso.png">
+                            <img src="img/profesor.png">
+                            <img src="img/prueba.png">
+                        </div>
+                  </div>
+                 
+                </div><!-- end pregunta21 -->      
+
+                <div id="pregunta22" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Escriba un Query que entregue la lista de  alumnos para el curso “programación”.</p>
+                  
+                    <div class="solution">
+                        <h3>Solución</h3>
+                    </div>
+                    <div class="content-code">
+                            <img src="img/22.png">
+                    </div>
+                  <div class="content-code">
+                        <pre class="sql">
+select * from curso as c
+    inner join alumno_curso as ac on ac.curso_id = c.id
+    inner join alumno as a on ac.alumno_id = a.id
+where nombre_curso ="programación";
+                        </pre>
+                  </div>
+                </div> <!-- end pregunta22 -->      
+
+                <div id="pregunta23" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Escriba un Query  que calcule el promedio de notas de un alumno en un curso.</p>
+                  
+                    <div class="solution">
+                        <h3>Solución</h3>
+                    </div>
+                    <div class="content-code">
+                            <img src="img/23.png">
+                    </div>
+                  <div class="content-code">
+                        <pre class="sql">
+SELECT concat(a.nombre_alumno, " ", a.apellido_alumno) as  Alumno, c.nombre_curso Curso,  avg(ca.nota) as Promedio FROM curso as c
+    inner join prueba as p on p.curso_id = c.id
+    inner join calificacion as ca on ca.prueba_id = p.id
+    inner join alumno a on a.id = ca.alumno_id
+where c.id = 2 and ca.alumno_id =1;
+
+                        </pre>
+                  </div>
+                </div> <!-- end pregunta23 -->        
+
+                <div id="pregunta24" class="question"  style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Escriba un Query que entregue a los alumnos y el promedio que tiene en cada ramo.</p>
+                  
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <img src="img/24.png">
+                    </div>
+                  <div class="content-code">
+                        <pre class="sql">
+select a.id, concat(a.nombre_alumno, " ", a.apellido_alumno) as Alumno, c.nombre_curso as Ramo, avg(ca.nota) Promedio
+from calificacion as ca
+    inner join prueba p on p.id = ca.prueba_id
+    inner join alumno a on a.id = ca.alumno_id
+    inner join curso c on c.id = p.curso_id
+        where ca.alumno_id in ( 
+            select id from alumno
+        )
+group by ca.alumno_id, p.curso_id
+order by ca.alumno_id, p.id;
+
+                        </pre>
+                  </div>
+                </div> <!-- end pregunta24 -->    
+
+                <div id="pregunta25" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Escriba un Query que lista a todos los alumnos con más de un ramo conpromedio rojo.</p>
+                  
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <img src="img/25.png">
+                    </div>
+                  <div class="content-code">
+                        <pre class="sql">
+select concat(a.nombre_alumno, " ", a.apellido_alumno) as "Alumnos con promedio Rojo" from alumno a
+    where id in(
+        select IF((avg(ca.nota) < 4) = 1, IF(count(ca.alumno_id) >= 2, ca.alumno_id,""), "") as id  
+            from calificacion as ca
+                inner join prueba p on p.id = ca.prueba_id
+                inner join alumno a on a.id = ca.alumno_id
+                inner join curso c on c.id = p.curso_id
+                where ca.alumno_id in ( 
+                    select id from alumno
+            ) 
+            group by ca.alumno_id, p.curso_id
+            order by ca.alumno_id, p.id
+);
+                        </pre>
+                  </div>
+                </div> <!-- end pregunta25 -->      
+
+              <div id="pregunta26" class="question" style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Se tiene una tabla con información de jugadores de tenis: PLAYERS(Nombre, Pais, Ranking). Suponga que Ranking es un número de 1 a 100 que es distinto para cada jugador. Si la tabla en un momento dado tiene solo 20 tuplas, indique cuantas tuplas tiene la tabla que resulta de la siguiente consulta:</p>
+                        <pre class="sql">
+SELECT c1.Nombre, c2.Nombre
+    FROM PLAYERS c1, PLAYERS c2
+WHERE c1.Ranking > c2.Ranking;
+                        </pre>
+                  
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <p>d).-Imposible saberlo</p>
+                        <p>Dependerá mucho del valor de los ranking ingresados en cada una de las tuplas, por lo que es literalmente imposible saberlo.</p>
+                    </div>
+                  
+                </div> <!-- end pregunta26 -->       
+
+                <div id="pregunta31" class="question" style="display: none;" >
+                   <h4>Enunciado</h4>
+                   <p>Si usted estuviera resolviendo el problema del colegio con programación orientada a objetos, defina que clases usaría, métodos y las
+variables de estas clases. Puede utilizar el lenguaje que más le acomode o bien pseudos código. </p>
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <pre class="php">
+/*Clases y metodos */
+class Profesor {
+    private $_id                = null;
+    private $_nombre_profesor   = null;
+    private $_apellido_profesor = null;
+    
+    /* Getters */
+    private function getId (){
+        return $this->_id;
+    }
+
+    private function getNombreProfesor (){
+        return $this->_nombre_profesor;
+    }
+
+    public function getApellidoProfesor(){
+        return $this->_apellido_profesor;
+    }
+    
+    public function getNombreApellido(){
+        return $this->_nombre_profesor . " " . $this->_apellido_profesor ;
+    }
+    
+    /* Setters */
+    private function setId ($id){
+        return $this->_id = $id;
+    }
+
+    private function setNombreAlumno ($nombre_profesor){
+        return $this->_nombre_profesor =$nombre_profesor;
+    }
+
+    public function setApellidoAlumno($apellido_profesor){
+        return $this->_apellido_profesor=$apellido_profesor;
+    }
+
+    /* Constructors */
+    public function __construct(array $params) {
+        if(isset($params["id"]))   $this->setId($params["id"]);
+        if(isset($params["nombre_profesor"]))   $this->setNombreAlumno($params["nombre_profesor"]);
+        if(isset($params["apellido_profesor"]))   $this->setApellidoAlumno($params["apellido_profesor"]);
+        
+    }
+}
+
+class Prueba {
+    private $_id              = null;
+    private $_nombre_prueba   = null;
+    private $_curso_id        = null;
+    
+    /* Getters */
+    private function getId (){
+        return $this->_id;
+    }
+
+    private function getNombrePrueba (){
+        return $this->_nombre_prueba;
+    }
+
+    public function getHoras(){
+        return $this->_horas;
+    }
+    
+    public function getCursoPrueba($id){
+        return Curso::getCursoById($id);
+    }
+    
+    /* Setters */
+    private function setId ($id){
+        return $this->_id = $id;
+    }
+
+    private function setNombrePrueba ($nombre_prueba){
+        return $this->_nombre_prueba =$nombre_prueba;
+    }
+    
+    public function setCursoPrueba($curso_id){
+        return $this->_curso_id = $curso_id;
+    }
+
+    /* Constructors */
+    public function __construct(array $params) {
+        if(isset($params["id"]))   $this->setId($params["id"]);
+        if(isset($params["nombre_prueba"]))   $this->setNombreAlumno($params["nombre_prueba"]);
+        if(isset($params["curso_id"]))   $this->setApellidoAlumno($params["curso_id"]);
+        
+    }
+}
+
+class Alumno {
+    private $_id               = null;
+    private $_nombre_alumno    = null;
+    private $_apellido_alumno  = null;
+    
+    /* Getters */
+    private function getId (){
+        return $this->_id;
+    }
+
+    private function getNombreAlumno (){
+        return $this->_nombre_alumno;
+    }
+
+    public function getApellidoAlumno(){
+        return $this->_apellido_alumno;
+    }
+    
+    public function getNombreApellido(){
+        return $this->_nombre_alumno . " " . $this->_apellido_alumno ;
+    }
+    
+    /* Setters */
+    private function setId ($id){
+        return $this->_id = $id;
+    }
+
+    private function setNombreAlumno ($nombre_alumno){
+        return $this->_nombre_alumno =$nombre_alumno;
+    }
+
+    public function setApellidoAlumno($apellido_alumno){
+        return $this->_apellido_alumno=$apellido_alumno;
+    }
+
+    /* Constructors */
+    public function __construct(array $params) {
+        if(isset($params["id"]))   $this->setId($params["id"]);
+        if(isset($params["nombre_alumno"]))   $this->setNombreAlumno($params["nombre_alumno"]);
+        if(isset($params["apellido_alumno"]))   $this->setApellidoAlumno($params["apellido_alumno"]);
+        
+    }
+
+    /*Others*/
+    public function getAlumnoPorId(){
+        //code here for the persist layer to DB
+        return object;
+    }
+
+    public function getAlumnosPromedioCurso(){
+        //code here for the persist layer to DB
+        return array;
+    }
+
+    public function getAlumnosPromedioBajo(){
+        //code here for the persist layer to DB
+        return array;
+    }
+}
+
+class Curso {
+    private $_id            = null;
+    private $_nombre_curso  = null;
+    private $_horas         = null;
+    private $_profesor_id   = null;
+    
+    /* Getters */
+    private function getId (){
+        return $this->_id;
+    }
+
+    private function getNombreCurso (){
+        return $this->_nombre_curso;
+    }
+
+    public function getHoras(){
+        return $this->_horas;
+    }
+    
+    public function getProfesorCurso($id){
+        return Profesor::getProfesorById($id);
+    }
+    
+    /* Setters */
+    private function setId ($id){
+        return $this->_id = $id;
+    }
+
+    private function setNombreAlumno ($nombre_profesor){
+        return $this->_nombre_profesor =$nombre_profesor;
+    }
+
+    public function setApellidoAlumno($apellido_profesor){
+        return $this->_apellido_profesor=$apellido_profesor;
+    }
+
+    public function setProfesorCurso($profesor_id){
+        return $this->_profesor_id = $profesor_id;
+    }
+
+    /* Constructors */
+    public function __construct(array $params) {
+        if(isset($params["id"]))   $this->setId($params["id"]);
+        if(isset($params["nombre_curso"]))   $this->setNombreAlumno($params["nombre_curso"]);
+        if(isset($params["horas"]))   $this->setApellidoAlumno($params["horas"]);
+        if(isset($params["profesor_id"]))   $this->setApellidoAlumno($params["profesor_id"]);
+        
+    }
+
+    /*Other functions*/
+    public function getAlumnosPorCursoId($curso_id){
+        $alumnos = [];
+        $alumno_curso = AlumnoCurso::getAlumnosIdPorCursoId($curso_id);
+        foreach ($alumno_curso as $key => $value) {
+            $alumnos[] = Alumno::getAlumnoPorId($value["id"]);
+        }
+        return $alumnos;
+    }
+}
+
+class AlumnoCurso {
+    private $_id         = null;
+    private $_alumno_id  = null;
+    private $_curso_id   = null;
+    
+    /* Getters */
+    private function getId (){
+        return $this->_id;
+    }
+
+    private function getAlumnoId(){
+        return $this->_alumno_id;
+    }
+
+    public function getCursoId(){
+        return $this->_curso_id;
+    }
+    
+    /* Setters */
+    private function setId ($id){
+        return $this->_id = $id;
+    }
+
+    private function setAlumnoId ($alumno_id){
+        return $this->_alumno_id =$alumno_id;
+    }
+    
+    public function setCursoId($curso_id){
+        return $this->_curso_id = $curso_id;
+    }
+
+    /* Constructors */
+    public function __construct(array $params) {
+        if(isset($params["id"]))   $this->setId($params["id"]);
+        if(isset($params["alumno_id"]))   $this->setNombreAlumno($params["alumno_id"]);
+        if(isset($params["curso_id"]))   $this->setApellidoAlumno($params["curso_id"]);
+        
+    }
+
+    /*Other functions*/
+    public function getAlumnosIdPorCursoId($curso_id){
+        //code here for the persist layer to DB
+        return array;
+    }
+
+    public function getPromedioPorCursoIdAlumnoId($curso_id){
+        //code here for the persist layer to DB
+        return object;
+    }
+}
+class Calificacion {
+    private $_id         = null;
+    private $_alumno_id  = null;
+    private $_prueba_id  = null;
+    private $_nota       = null;
+    
+    /* Getters */
+    private function getId (){
+        return $this->_id;
+    }
+
+    private function getAlumnoId(){
+        return $this->_alumno_id;
+    }
+
+    public function getPruebaI(){
+        return $this->_prueba_id;
+    }
+    
+    /* Setters */
+    private function setId ($id){
+        return $this->_id = $id;
+    }
+
+    private function setAlumnoId ($alumno_id){
+        return $this->_alumno_id =$alumno_id;
+    }
+    
+    public function setPruebaId($prueba_id){
+        return $this->_prueba_id = $prueba_id;
+    }
+
+    /* Constructors */
+    public function __construct(array $params) {
+        if(isset($params["id"]))   $this->setId($params["id"]);
+        if(isset($params["alumno_id"]))   $this->setNombreAlumno($params["alumno_id"]);
+        if(isset($params["prueba_id"]))   $this->setApellidoAlumno($params["prueba_id"]);
+        if(isset($params["nota"]))   $this->setApellidoAlumno($params["nota"]);
+    }
+}
+
+
+
+                        </pre>    
+
+                    </div>
+                  
+                </div> <!-- end pregunta31 -->       
+
+                <div id="pregunta32" class="question"  style="display: none;">
+                   <h4>Enunciado</h4>
+                   <p>Diseñe un mazo de cartas (orientado a objetos) con propiedades y métodos básicos que considere para ser utilizado en distintas
+aplicaciones que utilicen cartas.:</p>
+                    <div class="solution">
+                        <h3>Solución</h3>
+                        <p>Use algo de Pseudocodigo "poco ortodoxso", se me hizo mas facil representarlos con un estilo de archivo '.yml' solo por tema de orden y tabulaciones, que usan algunos Framework en php para las configuraciones.</p>
+                    </div>
+                    <div class="content-code">    
+                        <pre class="php">
+Clase:"Mazo"
+    Atributos:
+        - cartas:ArrayList<Carta>
+    Metodos:
+        +crear()//retorna instancia que contiene las cartas    
+        +distribuirCartas(numeroCartas:int)//distribuye un numero n de cartas a un numero n de jugadores
+        +pedirCarta(Ramdom:Object)//Devuelve una carta aleatoria de las sobrates
+        +tomarPrimera(FirstInArray:Object)//Devuelve la primera carta del mazo
+        +partir()//Dividde en 2 el numero total de cartas del mazo
+
+Clase:"Carta"
+    Atributos:
+        - palo:string//Corazones, treboles, etc.
+        - valor:int//valor de la carta
+    Metodos:
+        +crear(n:int, p:string) //crear carta 'n' y palo 'p' para que no se vuelva a crear nuevamente la misma, o asignar a otro jugador
+        +mono()//Retorna un bool si la instancia de carta representa un (comodin)
+        +valor()//retorna el valor de la carta
+        +palo()//Retorna el palo correspondiente //Corazones, treboles, etc.
+
+
+Clase:"Jugador"
+    Atributos:
+        - nombre:string//Nombre Jugador
+        - numero de cartas:int//Numero de cartas que le entregan
+    Metodos:
+        +jugarCarta() //lanzar una carta
+        +pedirCarta() //pedir una carta del mazo
+        +sumarCarta() //agregar una carta a las que posee el jugador
+        +restarNumeroDeCartas() //Restar del numero de cartas con las que se partio, metodo automatico al "jugarCarta"
+        +irConTodo() //EL jugador expone todas sus cartas para ganar o perder
+                        </pre>
+                    </div> <!-- end content-code -->
+                  
+                </div> <!-- end pregunta32 -->    
+
+             <div id="pregunta33" class="question">
+                   <h4>Enunciado</h4>
+                   <h5>Diseño código frontend</h5>
+                   <p>Construya una función o clase en JS que recibiendo el anterior JSON por parámetro, permita renderear una agenda semanal en html y con bloques de 30 minutos.:</p>
+                    <div class="solution">
+                        <h3>Solución</h3>
+                      
+                    </div>
+
+                     <div class="content-code">
+                        <div class="container-calendar">
+                            <div class="container-table">
+
+                                <div class="container-cell first-column">
+                                    <div class="container-row row-header">
+                                        &nbsp;
+                                    </div>
+                                    <div class="container-row">
+                                        08:00
+                                    </div>
+                                    <div class="container-row">
+                                        08:30
+                                    </div>
+                                    <div class="container-row">
+                                        09:00
+                                    </div>
+                                    <div class="container-row">
+                                        09:30
+                                    </div>
+                                    <div class="container-row">
+                                        10:00
+                                    </div>
+                                    <div class="container-row">
+                                        10:30
+                                    </div>
+                                    <div class="container-row">
+                                        11:00
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Lunes
+                                    </div>
+                                    <div class="container-row available">
+                                        <div class="text-row">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="container-row available">
+                                        <div class="text-row">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="container-row available">
+                                        <div class="text-row">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="container-row available">
+                                        <div class="text-row">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="container-row appointment">
+                                        <div class="test-row-appointment">
+                                            <span>Roger Reyes</span>
+                                        </div>                                      
+                                    </div>
+                                     <div class="container-row">
+                                      col 2  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 2  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Martes
+                                    </div>
+                                   <div class="container-row available">
+                                        <div class="text-row">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="container-row appointment delayed">
+                                        <div class="test-row-appointment">
+                                            <span>Peter More</span>
+                                        </div>                                      
+                                    </div>
+                                    <div class="container-row">
+                                      col 3  fila 4
+                                    </div>
+                                    <div class="container-row">
+                                      col 3  fila 5
+                                    </div>
+                                    <div class="container-row">
+                                      col 3  fila 6
+                                    </div>
+                                    <div class="container-row">
+                                      col 3  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 3  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Miercoles
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 2
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 3
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 4
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 5
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 6
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 4  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Jueves
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 2
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 3
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 4
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 5
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 6
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 5  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Viernes
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 2
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 3
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 4
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 5
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 6
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 6  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Sabado
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 2
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 3
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 4
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 5
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 6
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 7  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell">
+                                    <div class="container-row row-header">
+                                      Domingo
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 2
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 3
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 4
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 5
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 6
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 7
+                                    </div>
+                                    <div class="container-row">
+                                      col 8  fila 8
+                                    </div>
+                                </div>
+
+                                <div class="container-cell last-column">
+                                    <div class="container-row row-header">
+                                      &nbsp;
+                                    </div>
+                                    <div class="container-row">
+                                      08:00
+                                    </div>
+                                    <div class="container-row">
+                                      08:30
+                                    </div>
+                                    <div class="container-row">
+                                      09:00
+                                    </div>
+                                    <div class="container-row">
+                                      09:30
+                                    </div>
+                                    <div class="container-row">
+                                      10:00
+                                    </div>
+                                    <div class="container-row">
+                                      10:30
+                                    </div>
+                                    <div class="container-row">
+                                      11:00
+                                    </div>
+                                </div>
+
+                            </div> <!-- container-tabla-->
+                        </div> <!-- container-calendar -->  
+                    </div><!-- content-code -->
+                </div> <!-- end pregunta33 -->           
+                
+
+
+            </div><!-- box content --> 
+            <div class="box sidebar"></div>
+
+          </div>
+          <div class="footer">
+            Copyright © <a href="http://cl.linkedin.com/pub/roger-reyes/35/849/65a/">Roger R. Reyes Miranda</a>
+          </div>
+        </div>
+         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+         <script type="text/javascript" src="js/jquery.snippet.js"></script> 
+         <script type="text/javascript" src="js/underscore-min.js"></script>         
+         <script type="text/javascript" src="js/functions.js"></script>
+         <script type="text/javascript" src="js/events.js"></script>
+         <script type="text/javascript" src="js/agenda.js"></script>
+         <script type="text/javascript" src="js/backbone-min.js"></script>
+         
+         <!-- Files .map-->
+         <script type="text/javascript"  src="js/underscore-min.map"></script>
+
+         <!-- Other Files -->
+         <script type="text/javascript"  src="js/number-to-words-dictionary.js"></script>
+
+    </body>
+</html>
+
