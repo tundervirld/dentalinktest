@@ -26,11 +26,26 @@ function numberZerosToRight(n){
     return zeros.length;
 }
 
+var words_numbers = DictionaryWordsNumbers;
 function numberToWords(n){
 	if (n.length > 0 && parseInt(n.join("")) > 0) {
 		var size = n.length;
 		var wordNumber = evaluationTypeNumber(size, n)
 
+		//border case numbers 11 to 19
+		if(size == 2){
+			//verify if value exist in dictionary
+			var exist_in_indictionary = words_numbers[size][String(n[0] + n[1])];
+
+			if(exist_in_indictionary!=undefined){
+				wordNumber = words_numbers[size][String(n[0] + n[1])];
+				
+				//end recursivity	
+				n = [];
+			}
+			
+		}
+		
         //delete first member in array and recursion
         var copy_array = n.shift();
 		return  wordNumber + " " + (numberToWords(n));
@@ -41,7 +56,6 @@ function numberToWords(n){
 
 function evaluationTypeNumber(size, value){
     var response = "";
-	var words_numbers = DictionaryWordsNumbers;
 	var value_to_number = value.join("");
 
 	switch(size) {

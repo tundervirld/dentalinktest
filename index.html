@@ -11,7 +11,14 @@
     <body>
     
         <div class="wrapper">
-          <div class="header"><h1>Test Dentalink</h1></div>
+          <div class="header">
+             <img src="img/dentalink_header_white.png">
+             <span class="text-logo">Test </span>
+             <a class="icon-github" href="https://github.com/tundervirld/dentalinktest">
+                 <img src="img/icons/github_circle_gray-32.png"> 
+                
+            </a>
+         </div>
           <div class="main">
             <!--menu-->
             <div class="box sidebar">
@@ -92,104 +99,38 @@
                   </div>
                   <div class="content-code">
                         <pre class="js">
-
-                       /*Dictionary of Numbers*/
-DictionaryWordsNumbers = {
-    "1":{"0":"cero","1":"uno","2":"dos","3":"tres","4":"cuatro","5":"cinco","6":"seis","7":"siete","8":"ocho","9":"nueve"},
-    "2":{"10":"dies","11":"once","12":"doce","13":"trece","14":"catorce","15":"quince","16":"dieciseis","17":"diecisiete","18":"dieciocho","19":"diecinueve", "20":"veinte",
-        "30":"treinta","40":"cuarenta","50":"cincuenta","60":"sesenta","70":"setenta","80":"ochenta","90":"noventa"},
-    "3":{descripcion_simple:"ciento", descripcion_compuesta:"cientos", descripcion_especial_cien:"cien", descripcion_especial_quinientos:"quinientos",descripcion_especial_novecientos:"novecientos"},
-    "4":{descripcion_simple:"mil"}
-}
-//number-to-words event clic
-$( ".button-number-to-words" ).click(function() {
-    var value = $(".input-text-number-to-words").val();
-    if(value && isInteger(value) ){
+//evaluation-factorial 
+$( ".button-evaluation-factorial" ).click(function(event) {
+    var value = $(".input-text-factorial").val();
+    if(value && isNumber(value)){
             
-            $(".value-number-to-words").html(value);
-
-            var textNumber = numberToWords(numberToStringArray(value));
-            $(".text-number-to-words").html(textNumber);               
+            var factorial_number = factorial(parseInt(value));
+            $(".value-factorial-number").html(factorial_number);
            
+            var zeros = numberZerosToRight(factorial_number);
+            $(".response-cero-numbers").html(zeros);
+
     }else{
-        $(".input-text-number-to-words").val("");
-        alert("Ingrese un número entero menor o igual a 1999");
+        $(".input-text-factorial").val("");
+        alert("Ingrese un número");
     }
+  event.preventDefault();
 });
-function numberToWords(n){
-    if (n.length > 0 && parseInt(n.join("")) > 0) {
-        var size = n.length;
-        var wordNumber = evaluationTypeNumber(size, n)
 
-        //delete first member in array and recursion
-        var copy_array = n.shift();
-        return  wordNumber + " " + (numberToWords(n));
-    }else{
-        return "";
-    }
+function factorial(n)
+{
+    if (n == 0 || n == 1)
+        return 1;
+    else
+        return n*factorial(n - 1);
+}  
+
+function numberZerosToRight(n){
+    var arrayValues = numberToStringArray(n);
+    var zeros = _.filter(arrayValues, function(string){ return string == "0"; });
+    return zeros.length;
 }
-
-function evaluationTypeNumber(size, value){
-    var response = "";
-    var words_numbers = DictionaryWordsNumbers;
-    var value_to_number = value.join("");
-
-    switch(size) {
-        case 1:
-            response = words_numbers[size][value_to_number];
-            break;
-        case 2:
-            if(parseInt(value[0]) != 0){
-                var value_residue = value_to_number % 10;
-                var string_and = "";
-                if(value_residue!=0){
-                    value_to_number =  parseInt(value_to_number) - value_residue;
-                    string_and = " y ";
-                }
-                response = words_numbers[size][value_to_number] + string_and;
-            }else{
-                response = "";
-            }
-            break;
-        case 3:
-            var before_word = "";
-            var after_word  = "";
-                
-            if(parseInt(value[0]) == 0){
-                before_word = "";
-                after_word  = "";
-            }else if(parseInt(value[0]) == 1){
-                before_word = words_numbers[size]["descripcion_especial_cien"];
-                
-                if(parseInt(value_to_number) > 100 && parseInt(value_to_number) < 199  ){
-                    before_word = "";
-                    after_word  = words_numbers[size]["descripcion_simple"]; 
-                }   
-            }else if(parseInt(value[0]) == 5){
-                before_word = "";
-                after_word = words_numbers[size]["descripcion_especial_quinientos"];
-            }else if(parseInt(value[0]) == 9){
-                before_word = "";
-                after_word = words_numbers[size]["descripcion_especial_novecientos"];
-            }else{
-                before_word = words_numbers[1][value[0]]
-                after_word  = words_numbers[size]["descripcion_compuesta"];         
-            }
-            response = before_word + " " + after_word;      
-            break;
-        case 4:
-            if(parseInt(value[0]) != 0){
-                response = words_numbers[size]["descripcion_simple"];
-            }else{
-                response = "";
-            }
-            break;
-        default:
-            break;
-    }
-    return response;
-}
-                        </pre>
+       </pre>
                         
                   </div>
                    
@@ -220,11 +161,10 @@ function evaluationTypeNumber(size, value){
                   </div>
                   <div class="content-code">
                         <pre class="js">
-
 /*Dictionary of Numbers*/
 DictionaryWordsNumbers = {
     "1":{"0":"cero","1":"uno","2":"dos","3":"tres","4":"cuatro","5":"cinco","6":"seis","7":"siete","8":"ocho","9":"nueve"},
-    "2":{"10":"dies","11":"once","12":"doce","13":"trece","14":"catorce","15":"quince","16":"dieciseis","17":"diecisiete","18":"dieciocho","19":"diecinueve", "20":"veinte",
+    "2":{"10":"diez","11":"once","12":"doce","13":"trece","14":"catorce","15":"quince","16":"dieciseis","17":"diecisiete","18":"dieciocho","19":"diecinueve", "20":"veinte",
         "30":"treinta","40":"cuarenta","50":"cincuenta","60":"sesenta","70":"setenta","80":"ochenta","90":"noventa"},
     "3":{descripcion_simple:"ciento", descripcion_compuesta:"cientos", descripcion_especial_cien:"cien", descripcion_especial_quinientos:"quinientos",descripcion_especial_novecientos:"novecientos"},
     "4":{descripcion_simple:"mil"}
@@ -316,9 +256,7 @@ function evaluationTypeNumber(size, value){
             break;
     }
     return response;
-}
-
-                        </pre>
+}                       </pre>
                         
                    </div>
 
@@ -331,7 +269,21 @@ function evaluationTypeNumber(size, value){
                     
                     <div class="solution">
                         <h3>Solución</h3>
-                        <label>lala</label>
+                        <p>El código esta hecho "c" en el archivo salto_caballo.c, lo quería pasar a interfaz, pero al final lo deje en c:
+                        </p>
+                        <p>
+                            <b>Compilar:&nbsp</b>gcc salto_caballo.c
+                        </p>
+                        <p>
+                            <b>Ejecutar:</b> solo lo he hecho en mac, el anterior comando crea un archivo.out, se lo arrastra a la consola, luego enter y eso es todo. <s>En la consola muestra los numeros del cuadro del tablero al que se movio el caballo.</s>
+                        </p>
+                    </div>
+                    <div class="content-code">
+                        <h5>Un pantallazo de la consola</h5>
+                        
+                        <p class="pull-center">
+                            <img src="img/salto_caballo1.png">
+                        </p>
                     </div>
                </div>
 
@@ -396,9 +348,7 @@ INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`
 INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '3', '1');
 
 INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '4', '3');
-INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '5', '2');
-
-                    </pre>
+INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`) VALUES ('2', '5', '2'); </pre>
                   </div> 
                   <div class="content-code">
                         <div class="tables-container-pictures">
@@ -428,8 +378,7 @@ INSERT INTO `colegio_dentalink`.`calificacion` (`alumno_id`, `prueba_id`, `nota`
 select * from curso as c
     inner join alumno_curso as ac on ac.curso_id = c.id
     inner join alumno as a on ac.alumno_id = a.id
-where nombre_curso ="programación";
-                        </pre>
+where nombre_curso ="programación"; </pre>
                   </div>
                 </div> <!-- end pregunta22 -->      
 
@@ -449,9 +398,7 @@ SELECT concat(a.nombre_alumno, " ", a.apellido_alumno) as  Alumno, c.nombre_curs
     inner join prueba as p on p.curso_id = c.id
     inner join calificacion as ca on ca.prueba_id = p.id
     inner join alumno a on a.id = ca.alumno_id
-where c.id = 2 and ca.alumno_id =1;
-
-                        </pre>
+where c.id = 2 and ca.alumno_id =1; </pre>
                   </div>
                 </div> <!-- end pregunta23 -->        
 
@@ -474,15 +421,13 @@ from calificacion as ca
             select id from alumno
         )
 group by ca.alumno_id, p.curso_id
-order by ca.alumno_id, p.id;
-
-                        </pre>
+order by ca.alumno_id, p.id; </pre>
                   </div>
                 </div> <!-- end pregunta24 -->    
 
                 <div id="pregunta25" class="question" style="display: none;">
                    <h4>Enunciado</h4>
-                   <p>Escriba un Query que lista a todos los alumnos con más de un ramo conpromedio rojo.</p>
+                   <p>Escriba un Query que lista a todos los alumnos con más de un ramo con promedio rojo.</p>
                   
                     <div class="solution">
                         <h3>Solución</h3>
@@ -502,8 +447,7 @@ select concat(a.nombre_alumno, " ", a.apellido_alumno) as "Alumnos con promedio 
             ) 
             group by ca.alumno_id, p.curso_id
             order by ca.alumno_id, p.id
-);
-                        </pre>
+);      </pre>
                   </div>
                 </div> <!-- end pregunta25 -->      
 
@@ -845,7 +789,7 @@ class Calificacion {
 aplicaciones que utilicen cartas.:</p>
                     <div class="solution">
                         <h3>Solución</h3>
-                        <p>Use algo de Pseudocodigo "poco ortodoxso", se me hizo mas facil representarlos con un estilo de archivo '.yml' solo por tema de orden y tabulaciones, que usan algunos Framework en php para las configuraciones.</p>
+                        <p>Use algo de Pseudocodigo "poco ortodoxo", se me hizo mas facil representarlos con un estilo de archivo '.yml' solo por tema de orden y tabulaciones, que usan algunos Framework en php para las configuraciones.</p>
                     </div>
                     <div class="content-code">    
                         <pre class="php">
@@ -854,10 +798,10 @@ Clase:"Mazo"
         - cartas:ArrayList<Carta>
     Metodos:
         +crear()//retorna instancia que contiene las cartas    
-        +distribuirCartas(numeroCartas:int)//distribuye un numero n de cartas a un numero n de jugadores
-        +pedirCarta(Ramdom:Object)//Devuelve una carta aleatoria de las sobrates
+        +distribuirCartas(numeroCartas:int)//distribuye un número n de cartas a un número n de jugadores
+        +pedirCarta(Ramdom:Object)//Devuelve una carta aleatoria de las sobrantes
         +tomarPrimera(FirstInArray:Object)//Devuelve la primera carta del mazo
-        +partir()//Dividde en 2 el numero total de cartas del mazo
+        +partir()//Divide en 2 el numero total de cartas del mazo
 
 Clase:"Carta"
     Atributos:
@@ -873,12 +817,12 @@ Clase:"Carta"
 Clase:"Jugador"
     Atributos:
         - nombre:string//Nombre Jugador
-        - numero de cartas:int//Numero de cartas que le entregan
+        - numero de cartas:int//Número de cartas que le entregan
     Metodos:
         +jugarCarta() //lanzar una carta
         +pedirCarta() //pedir una carta del mazo
         +sumarCarta() //agregar una carta a las que posee el jugador
-        +restarNumeroDeCartas() //Restar del numero de cartas con las que se partio, metodo automatico al "jugarCarta"
+        +restarNumeroDeCartas() //Restar del numero de cartas con las que se partio, método automatico al "jugarCarta"
         +irConTodo() //EL jugador expone todas sus cartas para ganar o perder
                         </pre>
                     </div> <!-- end content-code -->
@@ -888,14 +832,14 @@ Clase:"Jugador"
              <div id="pregunta33" class="question" style="display: none;">
                    <h4>Enunciado</h4>
                    <h5>Diseño código frontend</h5>
-                   <p>Construya una función o clase en JS que recibiendo el anterior JSON por parámetro, permita renderear una agenda semanal en html y con bloques de 30 minutos.:</p>
+                   <p>Construya una función o clase en JS que recibiendo el anterior JSON por parámetro, permita renderizar una agenda semanal en html y con bloques de 30 minutos.:</p>
                     <div class="solution">
                         <h3>Solución</h3>
                       <p>Para este ejecicio utilizo, <b>handlebars.js</b>, <b>backbone.js</b>, <b>jquery.js</b>, un poco de <b>underscore.js</b>, y cambie un poco el set de datos para poder identificar las horas disponibles y las citas que tienen que pintarse de color amarillo agregando los campos "advertencia", "disponible".
                       </p>
 
 
-                      <p> Para la presentacion de la tabla de manera dinámica hago varias acciones, se pueden observar en el archivo agenda.js, primero determino la hora minima y la hora maxima para poder tener un set de horas posibles entre esos rangos, luego relleno un set de datos con las citas y todas las horas para que quede cuadrado y facilitar la presentacion.
+                      <p>Para la presentación de la tabla de manera dinámica, hago varias acciones, se pueden observar en el archivo <b>agenda.js</b>, primero determino la hora mínima y la hora máxima para poder tener un set de horas posibles entre esos rangos, luego relleno un set de datos con las citas y todas las horas para que quede cuadrado y facilitar construcción de la vista.
                        
                       </p>
                       </br>
@@ -972,6 +916,8 @@ var citas2: {
           </div>
           <div class="footer">
             Copyright © <a href="http://cl.linkedin.com/pub/roger-reyes/35/849/65a/">Roger R. Reyes Miranda</a>
+            
+
           </div>
         </div>
 
@@ -984,20 +930,20 @@ var citas2: {
 
 
         <!-- JS Libraries -->
-         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-         <script type="text/javascript" src="js/jquery.snippet.js"></script> 
-         <script type="text/javascript" src="js/json2.js"></script>
-         <script type="text/javascript" src="js/underscore-min.js"></script>         
-         <script type="text/javascript" src="js/backbone-min.js"></script>
-         <script type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
+         <script type="text/javascript" src="js/libraries/jquery-1.11.2.min.js"></script>
+         <script type="text/javascript" src="js/libraries/jquery.snippet.js"></script> 
+         <script type="text/javascript" src="js/libraries/json2.js"></script>
+         <script type="text/javascript" src="js/libraries/underscore-min.js"></script>         
+         <script type="text/javascript" src="js/libraries/backbone-min.js"></script>
+         <script type="text/javascript" src="js/libraries/handlebars-v2.0.0.js"></script>
          <script type="text/javascript" src="js/libraries/helpers/HelpersHandlebars.js"></script>
 
         <!-- JS Customs -->
-         <script type="text/javascript" src="js/functions.js"></script>
          <script type="text/javascript" src="js/prototype_functions.js"></script>
          <script type="text/javascript" src="js/events.js"></script>
          <script type="text/javascript" src="js/agenda.js"></script>
          <script type="text/javascript" src="js/number-to-words-dictionary.js"></script>
+         <script type="text/javascript" src="js/functions.js"></script>
          
          
         
