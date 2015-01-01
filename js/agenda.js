@@ -2,21 +2,37 @@
  
     var intervalo_tiempo = 30;//minutos de intervalo segun el problema plantiado
 
-    //var citas = {
+    // var citas = {
+    //             lunes: [
+    //                 {nombre: 'Roger ', hora_inicio: '06:30', hora_termino: '08:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
+    //             ], 
+    //             martes: [],
+    //             miercoles: [
+    //                 {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '10:30', hora_termino: '12:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
+    //                 {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
+    //             ], 
+    //             jueves: [], 
+    //             viernes: []
+    // }
+
     var citas = {
                 lunes: [
-                    {nombre: 'Roger ', hora_inicio: '06:30', hora_termino: '08:00'},
-                    {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
-                    {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00'},
-                    {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
-                    {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
+                    
+                    {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00', advertencia:true },
+                    {nombre: ''      , hora_inicio: '08:30', hora_termino: '09:30', disponible: true },
+                    
                 ], 
-                martes: [],
+                martes: [
+                    {nombre: ''      , hora_inicio: '09:30', hora_termino: '11:00', disponible: true },
+                ],
                 miercoles: [
                     {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
-                    {nombre: 'Daniel', hora_inicio: '10:30', hora_termino: '12:00'},
-                    {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
-                    {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
                 ], 
                 jueves: [], 
                 viernes: []
@@ -64,11 +80,19 @@
         array_intervalo.push(hora_compuesta);
     };
 
-    //set completo de datos
-    var citas_set_completo = {
-        "horas":array_intervalo
+    //agregar el campo vacio para las cabeceras del calendario en la columna de horas para que se dibuje el icono
+    array_intervalo.unshift({
+                    header:""
+        }             
+    );
 
-     };
+
+    //set completo de datos en array, solo para facilitar la presentacion
+    var citas_set_completo = []
+        citas_set_completo[0] = array_intervalo;
+        citas_set_completo[8] = array_intervalo;
+
+
     //generar el array completo para pasarlo a la plantilla handlebars
     
     //iteracion de todo el set de datos para scar los dias
@@ -95,16 +119,32 @@
                 var hora_termino = parseStringToMinuteNumber(cita["hora_termino"]);;            
 
                 if(hora >= hora_inicio && hora < hora_termino ){
-                    usuario_citado = minuteNumberToHour(hora) + " " +  cita["nombre"];
-                    //break;
+                    var _nombre      = (cita["nombre"]     != undefined) ? cita["nombre"] : "";
+                    var _advertencia = (cita["advertencia"]!= undefined) ? cita["advertencia"]:"";
+                    var _disponible  = (cita["disponible"] != undefined) ? cita["disponible"]:"";
+
+                    usuario_citado = {
+                        nombre: _nombre,
+                        advertencia: _advertencia,
+                        disponible: _disponible
+                    };
+                    
                 }
             });
 
             _citasPorDiaAux.push(usuario_citado);
 
         };
+        var dia_en_numero = parseInt(parseDayToNumberDay(dia)) + 1 ;
 
-        citas_set_completo[dia] = _citasPorDiaAux;
+        //agregar el campo con el nombre del día para las cabeceras del calendario
+        _citasPorDiaAux.unshift(
+            {
+                header:dia.capitalize()
+            }       
+        );
+
+        citas_set_completo[dia_en_numero] = _citasPorDiaAux;
     });
 
    function parseStringToMinuteNumber(valor){
@@ -120,5 +160,69 @@
     return hora_compuesta;
    }
 
+   function parseDayToNumberDay(cadena_dia){
+        var diccionario_dia_numero = {
+            lunes:0,
+            martes:1,
+            miercoles:2,
+            jueves:3,
+            viernes:4,
+            sabado:5,
+            domingo:6
+        }
+    return diccionario_dia_numero[cadena_dia];
+   }
+
+    // Stub out the person model
+    var Cita = Backbone.Model.extend({
+        
+    });
+
+    //Definir la coleccion de datos como un modelo Backbone
+    var ColeccionCitas = Backbone.Collection.extend({
+        model: Cita
+    });
+
+    //Definición de la vista ColeccionCitas Individual
+    var CitaVista = Backbone.View.extend({
+        tagName: "div",
+        className: "container-cell",
+        template: $("#citaTemplate").html(),
+
+        render: function () {
+            var source = this.template;
+            var template = Handlebars.compile(source);
+            var html = template(this.model.toJSON());
+            $(this.el).html(html);            
+            return this;
+        }
+    });
+
+    //Definicion de la vista principal
+    var DirectorioVista = Backbone.View.extend({
+        el: $("#citas"),
+
+        initialize: function () {
+            this.collection = new ColeccionCitas(citas_set_completo);
+            this.render();
+        },
+
+        render: function () {
+            var that = this;
+            _.each(this.collection.models, function (item) {
+                that.renderCita(item);
+            }, this);
+        },
+
+        renderCita: function (item) {
+            var citaVista = new CitaVista({
+                model: item
+            });
+            this.$el.append(citaVista.render().el);
+        }
+    });
+
+    //create instance of master view
+    var directorio_citas = new DirectorioVista();
 
 } (jQuery));
