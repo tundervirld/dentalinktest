@@ -45,7 +45,7 @@ function numberToWords(n){
 			}
 			
 		}
-		
+	
         //delete first member in array and recursion
         var copy_array = n.shift();
 		return  wordNumber + " " + (numberToWords(n));
