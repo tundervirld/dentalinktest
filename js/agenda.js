@@ -1,45 +1,47 @@
-(function ($) {
- 
-    var intervalo_tiempo = 30;//minutos de intervalo segun el problema plantiado
-
-    // var citas = {
-    //             lunes: [
-    //                 {nombre: 'Roger ', hora_inicio: '06:30', hora_termino: '08:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
-    //             ], 
-    //             martes: [],
-    //             miercoles: [
-    //                 {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '10:30', hora_termino: '12:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
-    //                 {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
-    //             ], 
-    //             jueves: [], 
-    //             viernes: []
-    // }
-
-    var citas = {
+var generar_agenda = function (set){ 
+    $("#citas").html("");
+    var intervalo_tiempo = 30;//minutos de intervalo segun el problema lo plantea
+    var set_datos = {
+        citas1: {
                 lunes: [
-                    
-                    {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00', advertencia:true },
-                    {nombre: ''      , hora_inicio: '08:30', hora_termino: '09:30', disponible: true },
-                    
+                    {nombre: 'Roger ', hora_inicio: '06:30', hora_termino: '08:00'},
+                    {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00', advertencia:true },
+                    {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00'},
+                    {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
+                    {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
                 ], 
-                martes: [
-                    {nombre: ''      , hora_inicio: '09:30', hora_termino: '11:00', disponible: true },
-                ],
+                martes: [],
                 miercoles: [
                     {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'},
+                    {nombre: 'Daniel', hora_inicio: '10:30', hora_termino: '12:00', advertencia:true },
+                    {nombre: 'Daniel', hora_inicio: '15:00', hora_termino: '16:00'},
+                    {nombre: 'Daniel', hora_inicio: '17:00', hora_termino: '19:30'}
+                ], 
+                jueves: [], 
+                viernes: [
+                    {nombre: ''      , hora_inicio: '10:30', hora_termino: '11:00', disponible: true },
+                    {nombre: ''      , hora_inicio: '16:00', hora_termino: '18:00', disponible: true }
+                ]
+        },
+
+        citas2 : {
+                lunes: [                    
+                    {nombre: 'Daniel', hora_inicio: '09:30', hora_termino: '11:00', advertencia:true },
+                    {nombre: ''      , hora_inicio: '08:30', hora_termino: '09:30', disponible: true }
+                ], 
+                martes: [
+                    {nombre: ''      , hora_inicio: '09:30', hora_termino: '11:00', disponible: true }
+                ],
+                miercoles: [
+                    {nombre: 'Daniel', hora_inicio: '08:00', hora_termino: '09:00'}
                 ], 
                 jueves: [], 
                 viernes: []
+        }
     }
 
     //Todas las horas minimas desde el Json
-    var horas_inicio =_.compact(_.map(citas, function(listCitas , dia){ 
+    var horas_inicio =_.compact(_.map(set_datos[set], function(listCitas , dia){ 
                                     if(listCitas.length > 0){
                                         return  _.pluck(listCitas, 'hora_inicio') ;
                                     }else{
@@ -55,7 +57,7 @@
     );
     
     //Todas las horas maximas desde el Json
-    var horas_termino =_.compact(_.map(citas, function(listCitas , dia){ 
+    var horas_termino =_.compact(_.map(set_datos[set], function(listCitas , dia){ 
                                     if(listCitas.length > 0){
                                         return  _.pluck(listCitas, 'hora_termino') ;
                                     }else{
@@ -98,15 +100,15 @@
     //iteracion de todo el set de datos para scar los dias
 
    /*Casos borde*/
-   if(citas["sabado"]==undefined){
-        citas["sabado"] = [];
+   if(set_datos[set]["sabado"]==undefined){
+        set_datos[set]["sabado"] = [];
    }
-   if(citas["domingo"]==undefined){
-        citas["domingo"] = [];
+   if(set_datos[set]["domingo"]==undefined){
+        set_datos[set]["domingo"] = [];
    }
    /*End Casos borde*/
 
-    _.each(citas , function(citasPorDia , dia){ 
+    _.each(set_datos[set] , function(citasPorDia , dia){ 
         
         var _citasPorDiaAux = []; 
 
@@ -225,4 +227,4 @@
     //create instance of master view
     var directorio_citas = new DirectorioVista();
 
-} (jQuery));
+};
