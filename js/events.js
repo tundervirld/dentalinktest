@@ -18,6 +18,7 @@ $(document).ready(function() {
     $("pre.js").snippet("javascript",{style:"vim",transparent:true});
     $("pre.sql").snippet("sql",{style:"vim",transparent:true});
     $("pre.php").snippet("php",{style:"vim",transparent:true});
+    $("pre.c").snippet("c",{style:"vim",transparent:true});
         
     //cargar por defecto la agenda 
     generar_agenda("citas1");

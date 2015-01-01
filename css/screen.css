@@ -24,6 +24,13 @@ body {
   color: #fff;
   line-height: 45px;
 }
+.header img{
+  margin-top: 15px;
+}
+.header span.text-logo{
+  font-size: 50px;
+  padding-left: 10px;
+}
 
 .main {
   height: 100%;
@@ -50,6 +57,13 @@ body {
   line-height: 40px;
 
 }
+
+.header .icon-github{  
+    cursor: pointer;
+    float: right;
+    margin-right: 40px;
+}
+
 /*Style menus*/
 ul {
 
