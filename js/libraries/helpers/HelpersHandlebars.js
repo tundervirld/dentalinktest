@@ -9,7 +9,7 @@ Handlebars.registerHelper("ContainerRowBuilder", function (cita) {
 
         if(cita["header"] != undefined){
             class_primer_div = "row-header";
-            div_interior = (cita["header"] == "") ?  "&nbsp" : cita["header"];   
+            div_interior = (cita["header"] == "") ?  "&nbsp;" : cita["header"];   
         }
     }else if(typeof cita == "object"){
         var _html = [];
@@ -25,7 +25,7 @@ Handlebars.registerHelper("ContainerRowBuilder", function (cita) {
 
         }else if(cita["disponible"] == true ){// si no tienen nombre son horas disponibles
             class_div_interior = "text-row";
-            valor_span = "&nbsp";
+            valor_span = "&nbsp;";
             class_primer_div = "available";
         }
         
